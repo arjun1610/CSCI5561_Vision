@@ -1,4 +1,4 @@
-function [ hist_value ] = hist( filename )
+function  hist( filename )
 %HIST Summary of this function goes here
 %   Detailed explanation goes here
 image=imread(filename);
@@ -6,10 +6,10 @@ figure;
 imshow(image);
 figure
 imhist(image);
-[row,col]=size(image);
+% [row,col]=size(image);
 image=double(image);
 %smoothing
-val=zeros(row,col);
+% val=zeros(row,col);
 % for i=2:row-1
 %     for j=2:col-1
 %         val(i,j)= image(i,j) + image(i-1,j)+ image(i+1,j);               
@@ -32,14 +32,18 @@ val = (val >= value);
     
 figure;
 imshow(val);
+
 output = part2(val);
 RGB_label = label2rgb(output, @copper, 'c', 'shuffle');
 figure;
 imshow(RGB_label,'InitialMagnification','fit')
-L = bwlabel(val);
-RGB_label = label2rgb(output, @copper, 'c', 'shuffle');
+
+% create image
+im = zeros(100,100);
+im(40:60, 50:70)=1;
 figure;
-imshow(RGB_label,'InitialMagnification','fit')
+imshow(im);
+part3(im);
 end
 
 function value = threshold(P)
