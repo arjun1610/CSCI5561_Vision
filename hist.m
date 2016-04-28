@@ -1,32 +1,45 @@
-function [ hist_value ] = hist( filename, color )
+function [ hist_value ] = hist( filename )
 %HIST Summary of this function goes here
 %   Detailed explanation goes here
 image=imread(filename);
-% figure;
-% imshow(image);
-% figure
-% imhist(image);
+figure;
+imshow(image);
+figure
+imhist(image);
 [row,col]=size(image);
 image=double(image);
-% smoothing
+%smoothing
 val=zeros(row,col);
-for i=2:row-1
-    for j=2:col-1
-        val(i,j)= image(i,j) + image(i-1,j)+ image(i+1,j);               
-    end
-end
-minVal=min(min(val));
-maxVal=max(max(val));
-val=round((val-minVal)./(maxVal-minVal).*255);
+% for i=2:row-1
+%     for j=2:col-1
+%         val(i,j)= image(i,j) + image(i-1,j)+ image(i+1,j);               
+%     end
+% end
+% minVal=min(min(val));
+% maxVal=max(max(val));
+% val=round((val-minVal)./(maxVal-minVal).*255);
 
-% figure
-% imhist(uint8(val));
+image=[zeros(size(image,1),1) image zeros(size(image,1),1)]; 
+image=[zeros(size(image,2),1)'; image; zeros(size(image,2),1)']; 
+
+val=image;
+figure
+imhist(uint8(val));
+
+
 value = threshold(val);
-val = (val>=value);
-
-% figure;
-% imshow(val);
+val = (val >= value);
+    
+figure;
+imshow(val);
 output = part2(val);
+RGB_label = label2rgb(output, @copper, 'c', 'shuffle');
+figure;
+imshow(RGB_label,'InitialMagnification','fit')
+L = bwlabel(val);
+RGB_label = label2rgb(output, @copper, 'c', 'shuffle');
+figure;
+imshow(RGB_label,'InitialMagnification','fit')
 end
 
 function value = threshold(P)
