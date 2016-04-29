@@ -7,8 +7,8 @@ curlabValue=1;
 labeled=zeros(rows,cols);
 pixel_queue=[];
 % flag= 0;
-for i= 1:rows
-    for j= 1:cols
+for i= 2:rows-1
+    for j= 2:cols-1
         flag = 0;
         % 2) If this pixel is a foreground pixel and it is not already 
         % labeled, then give it the label "curlab" and add it as the first
@@ -28,7 +28,7 @@ for i= 1:rows
         % foreground pixel and is not already labeled, give it the 
         % "curlab" label and add it to the queue. Repeat (3) until there 
         % are no more elements in the queue.
-        while(~isempty(pixel_queue))
+        while ~isempty(pixel_queue)
             coordinates = pixel_queue(end,:);
             % popping out the last value;
             pixel_queue(end,:) = [];
